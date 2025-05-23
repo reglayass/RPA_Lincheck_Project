@@ -15,6 +15,7 @@ dependencies {
     testImplementation("junit:junit:4.13.1")
     testRuntimeOnly("org.junit.vintage:junit-vintage-engine:1.9.2")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.9.2")
+    implementation("org.jctools:jctools-core:4.0.3")
 }
 
 tasks.test {
