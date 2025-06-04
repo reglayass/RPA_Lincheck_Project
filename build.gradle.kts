@@ -18,12 +18,14 @@ dependencies {
     implementation("org.jctools:jctools-core:4.0.3")
     implementation("org.agrona:agrona:2.2.0")
     implementation("com.lmax:disruptor:4.0.0")
+    implementation("com.github.ben-manes.caffeine:caffeine:3.2.0")
     implementation("co.paralleluniverse:quasar-core:0.8.0")
 }
 
-tasks.test {
+tasks.withType<Test> {
     useJUnitPlatform()
     jvmArgs(
         "--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED",
+        "--add-opens=java.base/java.nio=ALL-UNNAMED"  // sometimes needed for buffer access
     )
 }
