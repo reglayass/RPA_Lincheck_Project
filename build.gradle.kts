@@ -18,6 +18,7 @@ dependencies {
     implementation("org.jctools:jctools-core:4.0.3")
     implementation("org.agrona:agrona:2.2.0")
     implementation("com.lmax:disruptor:4.0.0")
+    implementation("co.paralleluniverse:quasar-core:0.8.0")
 }
 
 tasks.test {
