@@ -1,25 +1,35 @@
 import org.agrona.concurrent.ManyToOneConcurrentLinkedQueue
-import org.jetbrains.kotlinx.lincheck.*
 import org.jetbrains.kotlinx.lincheck.annotations.*
-import org.jetbrains.kotlinx.lincheck.strategy.managed.modelchecking.*
-import org.junit.*
-import org.jetbrains.kotlinx.lincheck.paramgen.*
+import org.jetbrains.kotlinx.lincheck.check
+import org.jetbrains.kotlinx.lincheck.paramgen.IntGen
+import org.jetbrains.kotlinx.lincheck.strategy.managed.modelchecking.ModelCheckingOptions
+import org.jetbrains.kotlinx.lincheck.strategy.stress.StressOptions
+import org.junit.Test
 
 class ManyToOneConcurrentLinkedQueueTest {
-    private var linkedQueue = ManyToOneConcurrentLinkedQueue<Int>()
+    private val queue = ManyToOneConcurrentLinkedQueue<Int>()
 
     @Operation
-    fun add(@Param(gen = IntGen::class, conf = "0:5")e : Int) = linkedQueue.add(e)
+    fun offer(@Param(gen = IntGen::class, conf="1:10")x : Int) = queue.offer(x)
+
+    @Operation(nonParallelGroup = "consumer")
+    fun poll() = queue.poll()
+
+    @Operation()
+    fun peek() = queue.peek()
 
     @Operation
-    fun offer(@Param(gen = IntGen::class, conf = "0:5") e: Int) = linkedQueue.offer(e)
+    fun size() = queue.size
 
-    @Operation(nonParallelGroup = "consumers")
-    fun peek() = linkedQueue.peek()
+    @Operation
+    fun contains(@Param(gen = IntGen::class, conf="1:10")x: Int) = queue.contains(x)
 
-    @Operation(nonParallelGroup = "consumers")
-    fun poll() = linkedQueue.poll()
+    @Operation
+    fun remove(@Param(gen = IntGen::class, conf="1:10")x: Int) = queue.remove()
 
     @Test
-    fun modelChecking() = ModelCheckingOptions().check(this::class)
+    fun runModelCheckingTest() = ModelCheckingOptions().check(this::class)
+
+    @Test
+    fun runStressTest() = StressOptions().check(this::class)
 }
