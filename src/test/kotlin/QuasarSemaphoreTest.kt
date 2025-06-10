@@ -5,14 +5,11 @@ import org.jetbrains.kotlinx.lincheck.strategy.managed.modelchecking.ModelChecki
 import org.jetbrains.kotlinx.lincheck.strategy.stress.StressOptions
 import org.junit.Test
 
-class SemaphoreTest {
+class QuasarSemaphoreTest {
     private var semaphore = Semaphore(1)
 
     @Operation
     fun tryAcquire() = semaphore.tryAcquire()
-
-    @Operation(promptCancellation = true, allowExtraSuspension = true)
-    fun acquire() = semaphore.acquire()
 
     @Operation
     fun release() = semaphore.release()

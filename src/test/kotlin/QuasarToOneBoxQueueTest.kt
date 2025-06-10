@@ -1,18 +1,23 @@
-import co.paralleluniverse.strands.queues.ArrayQueue
+import co.paralleluniverse.strands.queues.BoxQueue
 import org.jetbrains.kotlinx.lincheck.annotations.Operation
 import org.jetbrains.kotlinx.lincheck.check
 import org.jetbrains.kotlinx.lincheck.strategy.managed.modelchecking.ModelCheckingOptions
+import org.jetbrains.kotlinx.lincheck.strategy.stress.StressOptions
 import org.junit.Test
 
-class ArrayQueueTest {
-    private var queue = ArrayQueue<Int>(3);
+class QuasarToOneBoxQueueTest {
+    private var queue = BoxQueue<Int>(true, true);
 
     @Operation
     fun enq(i: Int) = queue.enq(i)
 
-    @Operation
+    @Operation(nonParallelGroup = "consumer")
     fun poll() = queue.poll()
 
     @Test
+    fun runStressTest() = StressOptions().check(this::class)
+
+    @Test
     fun modelChecking() = ModelCheckingOptions().check(this::class)
+
 }

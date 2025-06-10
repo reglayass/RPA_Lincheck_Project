@@ -20,6 +20,7 @@ dependencies {
     implementation("com.lmax:disruptor:4.0.0")
     implementation("com.github.ben-manes.caffeine:caffeine:3.2.0")
     implementation("co.paralleluniverse:quasar-core:0.8.0")
+    implementation("org.threadly:threadly:7.0")
 }
 
 tasks.withType<Test> {
