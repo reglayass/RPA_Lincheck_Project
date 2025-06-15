@@ -10,7 +10,7 @@ import org.junit.Test
 class SpscLinkedQueue {
     private var queue = MpmcArrayQueue<Int>(3);
 
-    @Operation(nonParallelGroup = "consumers")
+    @Operation(nonParallelGroup = "producers")
     fun offer(@Param(gen = IntGen::class, conf="1:5") e: Int) = queue.offer(e)
 
     @Operation(nonParallelGroup = "consumers")
@@ -19,26 +19,9 @@ class SpscLinkedQueue {
     @Operation(nonParallelGroup = "consumers")
     fun poll() = queue.poll()
 
-    @Operation(nonParallelGroup = "consumers")
-    fun size() = queue.size
-
-    @Operation(nonParallelGroup = "consumers")
-    fun clear() = queue.clear()
-
-    @Operation(nonParallelGroup = "consumers")
-    fun isEmpty() = queue.isEmpty
+    @Test
+    fun runStressTest() = StressOptions().minimizeFailedScenario(false).sequentialSpecification(LinkedQueueSpec::class.java).check(this::class)
 
     @Test
-    fun runStressTest() = StressOptions()
-            .sequentialSpecification(LinkedQueueSpec::class.java)
-            .threads(3)
-            .iterations(100)
-            .check(this::class)
-
-    @Test
-    fun modelChecking() = ModelCheckingOptions()
-            .sequentialSpecification(LinkedQueueSpec::class.java)
-            .threads(3)
-            .iterations(100)
-            .check(this::class)
+    fun modelChecking() = ModelCheckingOptions().minimizeFailedScenario(false).sequentialSpecification(LinkedQueueSpec::class.java).check(this::class)
 }

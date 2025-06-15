@@ -32,14 +32,14 @@ class OneToOneConcurrentArrayQueueTest {
 
     @Test
     fun runModelCheckingTest() = ModelCheckingOptions()
-        .sequentialSpecification(ArrayQueueSequentialSpec::class.java)
+        .sequentialSpecification(ArrayDequeSpec::class.java)
         .threads(3)
         .iterations(100)
         .check(this::class)
 
     @Test
     fun runStressTest() = StressOptions()
-        .sequentialSpecification(ArrayQueueSequentialSpec::class.java)
+        .sequentialSpecification(ArrayDequeSpec::class.java)
         .threads(3)
         .iterations(100)
         .check(this::class)

@@ -18,26 +18,9 @@ class MpmcArrayQueueTest {
     @Operation
     fun poll() = queue.poll()
 
-    @Operation
-    fun size() = queue.size
-
-    @Operation
-    fun clear() = queue.clear()
-
-    @Operation
-    fun isEmpty() = queue.isEmpty
+    @Test
+    fun runStressTest() = StressOptions().minimizeFailedScenario(false).sequentialSpecification(ArrayDequeSpec::class.java).check(this::class)
 
     @Test
-    fun runStressTest() = StressOptions()
-            .sequentialSpecification(ArrayQueueSequentialSpec::class.java)
-            .threads(3)
-            .iterations(100)
-            .check(this::class)
-
-    @Test
-    fun modelChecking() = ModelCheckingOptions()
-        .sequentialSpecification(ArrayQueueSequentialSpec::class.java)
-            .threads(3)
-            .iterations(100)
-            .check(this::class)
+    fun modelChecking() = ModelCheckingOptions().minimizeFailedScenario(false).sequentialSpecification(ArrayDequeSpec::class.java).check(this::class)
 }

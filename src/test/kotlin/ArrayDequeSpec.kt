@@ -1,4 +1,4 @@
-class ArrayQueueSequentialSpec {
+class ArrayDequeSpec {
     private val buffer = ArrayDeque<Int>(3)
 
     fun offer(e: Int): Boolean =

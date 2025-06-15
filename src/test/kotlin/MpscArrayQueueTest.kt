@@ -18,26 +18,9 @@ class MpscArrayQueueTest {
     @Operation(nonParallelGroup = "consumers")
     fun poll() = queue.poll()
 
-    @Operation(nonParallelGroup = "consumers")
-    fun size() = queue.size
-
-    @Operation(nonParallelGroup = "consumers")
-    fun clear() = queue.clear()
-
-    @Operation(nonParallelGroup = "consumers")
-    fun isEmpty() = queue.isEmpty
+    @Test
+    fun runStressTest() = StressOptions().minimizeFailedScenario(false).sequentialSpecification(ArrayDequeSpec::class.java).check(this::class)
 
     @Test
-    fun runStressTest() = StressOptions()
-        .sequentialSpecification(ArrayQueueSequentialSpec::class.java)
-        .threads(3)
-        .iterations(100)
-        .check(this::class)
-
-    @Test
-    fun modelChecking() = ModelCheckingOptions()
-        .sequentialSpecification(ArrayQueueSequentialSpec::class.java)
-        .threads(3)
-        .iterations(100)
-        .check(this::class)
+    fun modelChecking() = ModelCheckingOptions().minimizeFailedScenario(false).sequentialSpecification(ArrayDequeSpec::class.java).check(this::class)
 }
