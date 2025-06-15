@@ -18,29 +18,15 @@ class ManyToManyConcurrentArrayQueueTest {
     @Operation
     fun peek() = queue.peek()
 
-    @Operation
-    fun size() = queue.size
-
-    @Operation
-    fun isEmpty() = queue.isEmpty()
-
-    @Operation
-    fun contains(@Param(gen = IntGen::class, conf="1:10")x: Int) = queue.contains(x)
-
-    @Operation
-    fun clear() = queue.clear()
-
     @Test
     fun runModelCheckingTest() = ModelCheckingOptions()
-            .sequentialSpecification(ArrayDequeSpec::class.java)
-            .threads(3)
-            .iterations(100)
-            .check(this::class)
+        .sequentialSpecification(ArrayDequeSpec::class.java)
+        .minimizeFailedScenario(false)
+        .check(this::class)
 
     @Test
     fun runStressTest() = StressOptions()
-            .sequentialSpecification(ArrayDequeSpec::class.java)
-            .threads(3)
-            .iterations(100)
-            .check(this::class)
+        .sequentialSpecification(ArrayDequeSpec::class.java)
+        .minimizeFailedScenario(false)
+        .check(this::class)
 }

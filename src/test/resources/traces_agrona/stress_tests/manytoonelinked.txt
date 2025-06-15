@@ -1,0 +1,21 @@
+| ------------------------------- |
+|    Thread 1    |    Thread 2    |
+| ------------------------------- |
+| peek(): null   |                |
+| offer(5): true |                |
+| offer(6): true |                |
+| offer(5): true |                |
+| poll(): 5      |                |
+| ------------------------------- |
+| poll(): 6      | offer(6): true |
+| poll(): 5      | offer(4): true |
+| offer(7): true | offer(4): true |
+| peek(): null   | offer(6): true |
+| peek(): 6      | offer(3): true |
+| ------------------------------- |
+| offer(3): true |                |
+| offer(5): true |                |
+| poll(): 6      |                |
+| peek(): 7      |                |
+| offer(5): true |                |
+| ------------------------------- |

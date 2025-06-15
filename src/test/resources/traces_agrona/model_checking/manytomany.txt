@@ -1,0 +1,117 @@
+| -------------------------------------- |
+|       Thread 1        |    Thread 2    |
+| -------------------------------------- |
+| peek(): null          |                |
+| poll(): null          |                |
+| peek(): null          |                |
+| peek(): null          |                |
+| poll(): null          |                |
+| -------------------------------------- |
+| peek(): 4 [0,5]       | poll(): null   |
+| offer(3): false [1,5] | offer(4): true |
+| offer(2): false [2,5] | offer(5): true |
+| peek(): 4 [3,5]       | offer(4): true |
+| poll(): 4 [4,5]       | offer(5): true |
+| -------------------------------------- |
+| peek(): 5             |                |
+| peek(): 5             |                |
+| offer(4): true        |                |
+| peek(): 5             |                |
+| offer(2): false       |                |
+| -------------------------------------- |
+
+
+
+
+
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|                                                   Thread 1                                                    |                                                   Thread 2                                                   |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| peek(): null                                                                                                  |                                                                                                              |
+|   queue.peek(): null at ManyToManyConcurrentArrayQueueTest.peek(ManyToManyConcurrentArrayQueueTest.kt:19)     |                                                                                                              |
+|     head ➜ 0 at ManyToManyConcurrentArrayQueue.peek(ManyToManyConcurrentArrayQueue.java:163)                  |                                                                                                              |
+|   result: null                                                                                                |                                                                                                              |
+| poll(): null                                                                                                  |                                                                                                              |
+|   queue.poll(): null at ManyToManyConcurrentArrayQueueTest.poll(ManyToManyConcurrentArrayQueueTest.kt:16)     |                                                                                                              |
+|     head ➜ 0 at ManyToManyConcurrentArrayQueue.poll(ManyToManyConcurrentArrayQueue.java:127)                  |                                                                                                              |
+|   result: null                                                                                                |                                                                                                              |
+| peek(): null                                                                                                  |                                                                                                              |
+|   queue.peek(): null at ManyToManyConcurrentArrayQueueTest.peek(ManyToManyConcurrentArrayQueueTest.kt:19)     |                                                                                                              |
+|     head ➜ 0 at ManyToManyConcurrentArrayQueue.peek(ManyToManyConcurrentArrayQueue.java:163)                  |                                                                                                              |
+|   result: null                                                                                                |                                                                                                              |
+| peek(): null                                                                                                  |                                                                                                              |
+|   queue.peek(): null at ManyToManyConcurrentArrayQueueTest.peek(ManyToManyConcurrentArrayQueueTest.kt:19)     |                                                                                                              |
+|     head ➜ 0 at ManyToManyConcurrentArrayQueue.peek(ManyToManyConcurrentArrayQueue.java:163)                  |                                                                                                              |
+|   result: null                                                                                                |                                                                                                              |
+| poll(): null                                                                                                  |                                                                                                              |
+|   queue.poll(): null at ManyToManyConcurrentArrayQueueTest.poll(ManyToManyConcurrentArrayQueueTest.kt:16)     |                                                                                                              |
+|     head ➜ 0 at ManyToManyConcurrentArrayQueue.poll(ManyToManyConcurrentArrayQueue.java:127)                  |                                                                                                              |
+|   result: null                                                                                                |                                                                                                              |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|                                                                                                               | poll(): null                                                                                                 |
+|                                                                                                               |   queue.poll(): null at ManyToManyConcurrentArrayQueueTest.poll(ManyToManyConcurrentArrayQueueTest.kt:16)    |
+|                                                                                                               |     head ➜ 0 at ManyToManyConcurrentArrayQueue.poll(ManyToManyConcurrentArrayQueue.java:127)                 |
+|                                                                                                               |   result: null                                                                                               |
+|                                                                                                               | offer(4): true                                                                                               |
+|                                                                                                               |   queue.offer(4): true at ManyToManyConcurrentArrayQueueTest.offer(ManyToManyConcurrentArrayQueueTest.kt:13) |
+|                                                                                                               |     tail ➜ 0 at ManyToManyConcurrentArrayQueue.offer(ManyToManyConcurrentArrayQueue.java:94)                 |
+|                                                                                                               |   result: true                                                                                               |
+|                                                                                                               | offer(5): true                                                                                               |
+|                                                                                                               |   queue.offer(5): true at ManyToManyConcurrentArrayQueueTest.offer(ManyToManyConcurrentArrayQueueTest.kt:13) |
+|                                                                                                               |     tail ➜ 1 at ManyToManyConcurrentArrayQueue.offer(ManyToManyConcurrentArrayQueue.java:94)                 |
+|                                                                                                               |   result: true                                                                                               |
+|                                                                                                               | offer(4): true                                                                                               |
+|                                                                                                               |   queue.offer(4): true at ManyToManyConcurrentArrayQueueTest.offer(ManyToManyConcurrentArrayQueueTest.kt:13) |
+|                                                                                                               |     tail ➜ 2 at ManyToManyConcurrentArrayQueue.offer(ManyToManyConcurrentArrayQueue.java:94)                 |
+|                                                                                                               |   result: true                                                                                               |
+|                                                                                                               | offer(5): true                                                                                               |
+|                                                                                                               |   queue.offer(5): true at ManyToManyConcurrentArrayQueueTest.offer(ManyToManyConcurrentArrayQueueTest.kt:13) |
+|                                                                                                               |     tail ➜ 3 at ManyToManyConcurrentArrayQueue.offer(ManyToManyConcurrentArrayQueue.java:94)                 |
+|                                                                                                               |   result: true                                                                                               |
+| peek(): 4                                                                                                     |                                                                                                              |
+|   queue.peek(): 4 at ManyToManyConcurrentArrayQueueTest.peek(ManyToManyConcurrentArrayQueueTest.kt:19)        |                                                                                                              |
+|     head ➜ 0 at ManyToManyConcurrentArrayQueue.peek(ManyToManyConcurrentArrayQueue.java:163)                  |                                                                                                              |
+|     head ➜ 0 at ManyToManyConcurrentArrayQueue.peek(ManyToManyConcurrentArrayQueue.java:178)                  |                                                                                                              |
+|   result: 4                                                                                                   |                                                                                                              |
+| offer(3): false                                                                                               |                                                                                                              |
+|   queue.offer(3): false at ManyToManyConcurrentArrayQueueTest.offer(ManyToManyConcurrentArrayQueueTest.kt:13) |                                                                                                              |
+|     tail ➜ 4 at ManyToManyConcurrentArrayQueue.offer(ManyToManyConcurrentArrayQueue.java:94)                  |                                                                                                              |
+|   result: false                                                                                               |                                                                                                              |
+| offer(2): false                                                                                               |                                                                                                              |
+|   queue.offer(2): false at ManyToManyConcurrentArrayQueueTest.offer(ManyToManyConcurrentArrayQueueTest.kt:13) |                                                                                                              |
+|     tail ➜ 4 at ManyToManyConcurrentArrayQueue.offer(ManyToManyConcurrentArrayQueue.java:94)                  |                                                                                                              |
+|   result: false                                                                                               |                                                                                                              |
+| peek(): 4                                                                                                     |                                                                                                              |
+|   queue.peek(): 4 at ManyToManyConcurrentArrayQueueTest.peek(ManyToManyConcurrentArrayQueueTest.kt:19)        |                                                                                                              |
+|     head ➜ 0 at ManyToManyConcurrentArrayQueue.peek(ManyToManyConcurrentArrayQueue.java:163)                  |                                                                                                              |
+|     head ➜ 0 at ManyToManyConcurrentArrayQueue.peek(ManyToManyConcurrentArrayQueue.java:178)                  |                                                                                                              |
+|   result: 4                                                                                                   |                                                                                                              |
+| poll(): 4                                                                                                     |                                                                                                              |
+|   queue.poll(): 4 at ManyToManyConcurrentArrayQueueTest.poll(ManyToManyConcurrentArrayQueueTest.kt:16)        |                                                                                                              |
+|     head ➜ 0 at ManyToManyConcurrentArrayQueue.poll(ManyToManyConcurrentArrayQueue.java:127)                  |                                                                                                              |
+|   result: 4                                                                                                   |                                                                                                              |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| peek(): 5                                                                                                     |                                                                                                              |
+|   queue.peek(): 5 at ManyToManyConcurrentArrayQueueTest.peek(ManyToManyConcurrentArrayQueueTest.kt:19)        |                                                                                                              |
+|     head ➜ 1 at ManyToManyConcurrentArrayQueue.peek(ManyToManyConcurrentArrayQueue.java:163)                  |                                                                                                              |
+|     head ➜ 1 at ManyToManyConcurrentArrayQueue.peek(ManyToManyConcurrentArrayQueue.java:178)                  |                                                                                                              |
+|   result: 5                                                                                                   |                                                                                                              |
+| peek(): 5                                                                                                     |                                                                                                              |
+|   queue.peek(): 5 at ManyToManyConcurrentArrayQueueTest.peek(ManyToManyConcurrentArrayQueueTest.kt:19)        |                                                                                                              |
+|     head ➜ 1 at ManyToManyConcurrentArrayQueue.peek(ManyToManyConcurrentArrayQueue.java:163)                  |                                                                                                              |
+|     head ➜ 1 at ManyToManyConcurrentArrayQueue.peek(ManyToManyConcurrentArrayQueue.java:178)                  |                                                                                                              |
+|   result: 5                                                                                                   |                                                                                                              |
+| offer(4): true                                                                                                |                                                                                                              |
+|   queue.offer(4): true at ManyToManyConcurrentArrayQueueTest.offer(ManyToManyConcurrentArrayQueueTest.kt:13)  |                                                                                                              |
+|     tail ➜ 4 at ManyToManyConcurrentArrayQueue.offer(ManyToManyConcurrentArrayQueue.java:94)                  |                                                                                                              |
+|   result: true                                                                                                |                                                                                                              |
+| peek(): 5                                                                                                     |                                                                                                              |
+|   queue.peek(): 5 at ManyToManyConcurrentArrayQueueTest.peek(ManyToManyConcurrentArrayQueueTest.kt:19)        |                                                                                                              |
+|     head ➜ 1 at ManyToManyConcurrentArrayQueue.peek(ManyToManyConcurrentArrayQueue.java:163)                  |                                                                                                              |
+|     head ➜ 1 at ManyToManyConcurrentArrayQueue.peek(ManyToManyConcurrentArrayQueue.java:178)                  |                                                                                                              |
+|   result: 5                                                                                                   |                                                                                                              |
+| offer(2): false                                                                                               |                                                                                                              |
+|   queue.offer(2): false at ManyToManyConcurrentArrayQueueTest.offer(ManyToManyConcurrentArrayQueueTest.kt:13) |                                                                                                              |
+|     tail ➜ 5 at ManyToManyConcurrentArrayQueue.offer(ManyToManyConcurrentArrayQueue.java:94)                  |                                                                                                              |
+|   result: false                                                                                               |                                                                                                              |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

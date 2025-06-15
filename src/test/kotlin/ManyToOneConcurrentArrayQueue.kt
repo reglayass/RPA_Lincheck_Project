@@ -18,29 +18,15 @@ class ManyToOneConcurrentArrayQueueTest {
     @Operation(nonParallelGroup = "consumers")
     fun peek() = queue.peek()
 
-    @Operation(nonParallelGroup = "consumers")
-    fun size() = queue.size
-
-    @Operation(nonParallelGroup = "consumers")
-    fun isEmpty() = queue.isEmpty()
-
-    @Operation(nonParallelGroup = "consumers")
-    fun contains(@Param(gen = IntGen::class, conf="1:10")x: Int) = queue.contains(x)
-
-    @Operation(nonParallelGroup = "consumers")
-    fun clear() = queue.clear()
-
     @Test
     fun runModelCheckingTest() = ModelCheckingOptions()
         .sequentialSpecification(ArrayDequeSpec::class.java)
-        .threads(3)
-        .iterations(100)
+        .minimizeFailedScenario(false)
         .check(this::class)
 
     @Test
     fun runStressTest() = StressOptions()
         .sequentialSpecification(ArrayDequeSpec::class.java)
-        .threads(3)
-        .iterations(100)
+        .minimizeFailedScenario(false)
         .check(this::class)
 }

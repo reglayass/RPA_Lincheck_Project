@@ -1,0 +1,123 @@
+| -------------------------------------- |
+|       Thread 1       |    Thread 2     |
+| -------------------------------------- |
+| peek(): null         |                 |
+| poll(): null         |                 |
+| peek(): null         |                 |
+| peek(): null         |                 |
+| poll(): null         |                 |
+| -------------------------------------- |
+| poll(): 3 [0,5]      | offer(3): true  |
+| peek(): 4 [1,5]      | offer(4): true  |
+| peek(): 4 [2,5]      | offer(2): true  |
+| poll(): 4 [3,5]      | offer(5): true  |
+| offer(4): true [4,5] | offer(5): false |
+| -------------------------------------- |
+| peek(): 2            |                 |
+| peek(): 2            |                 |
+| offer(4): true       |                 |
+| peek(): 2            |                 |
+| offer(2): false      |                 |
+| -------------------------------------- |
+
+
+
+
+
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|                                                Thread 1                                                 |                                                Thread 2                                                 |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| peek(): null                                                                                            |                                                                                                         |
+|   queue.peek(): null at ManyToOneConcurrentArrayQueueTest.peek(ManyToOneConcurrentArrayQueue.kt:19)     |                                                                                                         |
+|     head ➜ 0 at AbstractConcurrentArrayQueue.peek(AbstractConcurrentArrayQueue.java:200)                |                                                                                                         |
+|   result: null                                                                                          |                                                                                                         |
+| poll(): null                                                                                            |                                                                                                         |
+|   queue.poll(): null at ManyToOneConcurrentArrayQueueTest.poll(ManyToOneConcurrentArrayQueue.kt:16)     |                                                                                                         |
+|     head ➜ 0 at ManyToOneConcurrentArrayQueue.poll(ManyToOneConcurrentArrayQueue.java:94)               |                                                                                                         |
+|   result: null                                                                                          |                                                                                                         |
+| peek(): null                                                                                            |                                                                                                         |
+|   queue.peek(): null at ManyToOneConcurrentArrayQueueTest.peek(ManyToOneConcurrentArrayQueue.kt:19)     |                                                                                                         |
+|     head ➜ 0 at AbstractConcurrentArrayQueue.peek(AbstractConcurrentArrayQueue.java:200)                |                                                                                                         |
+|   result: null                                                                                          |                                                                                                         |
+| peek(): null                                                                                            |                                                                                                         |
+|   queue.peek(): null at ManyToOneConcurrentArrayQueueTest.peek(ManyToOneConcurrentArrayQueue.kt:19)     |                                                                                                         |
+|     head ➜ 0 at AbstractConcurrentArrayQueue.peek(AbstractConcurrentArrayQueue.java:200)                |                                                                                                         |
+|   result: null                                                                                          |                                                                                                         |
+| poll(): null                                                                                            |                                                                                                         |
+|   queue.poll(): null at ManyToOneConcurrentArrayQueueTest.poll(ManyToOneConcurrentArrayQueue.kt:16)     |                                                                                                         |
+|     head ➜ 0 at ManyToOneConcurrentArrayQueue.poll(ManyToOneConcurrentArrayQueue.java:94)               |                                                                                                         |
+|   result: null                                                                                          |                                                                                                         |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|                                                                                                         | offer(3): true                                                                                          |
+|                                                                                                         |   queue.offer(3): true at ManyToOneConcurrentArrayQueueTest.offer(ManyToOneConcurrentArrayQueue.kt:13)  |
+|                                                                                                         |     sharedHeadCache ➜ 0 at ManyToOneConcurrentArrayQueue.offer(ManyToOneConcurrentArrayQueue.java:63)   |
+|                                                                                                         |     tail ➜ 0 at ManyToOneConcurrentArrayQueue.offer(ManyToOneConcurrentArrayQueue.java:68)              |
+|                                                                                                         |   result: true                                                                                          |
+|                                                                                                         | offer(4): true                                                                                          |
+|                                                                                                         |   queue.offer(4): true at ManyToOneConcurrentArrayQueueTest.offer(ManyToOneConcurrentArrayQueue.kt:13)  |
+|                                                                                                         |     sharedHeadCache ➜ 0 at ManyToOneConcurrentArrayQueue.offer(ManyToOneConcurrentArrayQueue.java:63)   |
+|                                                                                                         |     tail ➜ 1 at ManyToOneConcurrentArrayQueue.offer(ManyToOneConcurrentArrayQueue.java:68)              |
+|                                                                                                         |   result: true                                                                                          |
+|                                                                                                         | offer(2): true                                                                                          |
+|                                                                                                         |   queue.offer(2): true at ManyToOneConcurrentArrayQueueTest.offer(ManyToOneConcurrentArrayQueue.kt:13)  |
+|                                                                                                         |     sharedHeadCache ➜ 0 at ManyToOneConcurrentArrayQueue.offer(ManyToOneConcurrentArrayQueue.java:63)   |
+|                                                                                                         |     tail ➜ 2 at ManyToOneConcurrentArrayQueue.offer(ManyToOneConcurrentArrayQueue.java:68)              |
+|                                                                                                         |   result: true                                                                                          |
+|                                                                                                         | offer(5): true                                                                                          |
+|                                                                                                         |   queue.offer(5): true at ManyToOneConcurrentArrayQueueTest.offer(ManyToOneConcurrentArrayQueue.kt:13)  |
+|                                                                                                         |     sharedHeadCache ➜ 0 at ManyToOneConcurrentArrayQueue.offer(ManyToOneConcurrentArrayQueue.java:63)   |
+|                                                                                                         |     tail ➜ 3 at ManyToOneConcurrentArrayQueue.offer(ManyToOneConcurrentArrayQueue.java:68)              |
+|                                                                                                         |   result: true                                                                                          |
+|                                                                                                         | offer(5): false                                                                                         |
+|                                                                                                         |   queue.offer(5): false at ManyToOneConcurrentArrayQueueTest.offer(ManyToOneConcurrentArrayQueue.kt:13) |
+|                                                                                                         |     sharedHeadCache ➜ 0 at ManyToOneConcurrentArrayQueue.offer(ManyToOneConcurrentArrayQueue.java:63)   |
+|                                                                                                         |     tail ➜ 4 at ManyToOneConcurrentArrayQueue.offer(ManyToOneConcurrentArrayQueue.java:68)              |
+|                                                                                                         |     head ➜ 0 at ManyToOneConcurrentArrayQueue.offer(ManyToOneConcurrentArrayQueue.java:71)              |
+|                                                                                                         |   result: false                                                                                         |
+| poll(): 3                                                                                               |                                                                                                         |
+|   queue.poll(): 3 at ManyToOneConcurrentArrayQueueTest.poll(ManyToOneConcurrentArrayQueue.kt:16)        |                                                                                                         |
+|     head ➜ 0 at ManyToOneConcurrentArrayQueue.poll(ManyToOneConcurrentArrayQueue.java:94)               |                                                                                                         |
+|   result: 3                                                                                             |                                                                                                         |
+| peek(): 4                                                                                               |                                                                                                         |
+|   queue.peek(): 4 at ManyToOneConcurrentArrayQueueTest.peek(ManyToOneConcurrentArrayQueue.kt:19)        |                                                                                                         |
+|     head ➜ 1 at AbstractConcurrentArrayQueue.peek(AbstractConcurrentArrayQueue.java:200)                |                                                                                                         |
+|   result: 4                                                                                             |                                                                                                         |
+| peek(): 4                                                                                               |                                                                                                         |
+|   queue.peek(): 4 at ManyToOneConcurrentArrayQueueTest.peek(ManyToOneConcurrentArrayQueue.kt:19)        |                                                                                                         |
+|     head ➜ 1 at AbstractConcurrentArrayQueue.peek(AbstractConcurrentArrayQueue.java:200)                |                                                                                                         |
+|   result: 4                                                                                             |                                                                                                         |
+| poll(): 4                                                                                               |                                                                                                         |
+|   queue.poll(): 4 at ManyToOneConcurrentArrayQueueTest.poll(ManyToOneConcurrentArrayQueue.kt:16)        |                                                                                                         |
+|     head ➜ 1 at ManyToOneConcurrentArrayQueue.poll(ManyToOneConcurrentArrayQueue.java:94)               |                                                                                                         |
+|   result: 4                                                                                             |                                                                                                         |
+| offer(4): true                                                                                          |                                                                                                         |
+|   queue.offer(4): true at ManyToOneConcurrentArrayQueueTest.offer(ManyToOneConcurrentArrayQueue.kt:13)  |                                                                                                         |
+|     sharedHeadCache ➜ 0 at ManyToOneConcurrentArrayQueue.offer(ManyToOneConcurrentArrayQueue.java:63)   |                                                                                                         |
+|     tail ➜ 4 at ManyToOneConcurrentArrayQueue.offer(ManyToOneConcurrentArrayQueue.java:68)              |                                                                                                         |
+|     head ➜ 2 at ManyToOneConcurrentArrayQueue.offer(ManyToOneConcurrentArrayQueue.java:71)              |                                                                                                         |
+|   result: true                                                                                          |                                                                                                         |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| peek(): 2                                                                                               |                                                                                                         |
+|   queue.peek(): 2 at ManyToOneConcurrentArrayQueueTest.peek(ManyToOneConcurrentArrayQueue.kt:19)        |                                                                                                         |
+|     head ➜ 2 at AbstractConcurrentArrayQueue.peek(AbstractConcurrentArrayQueue.java:200)                |                                                                                                         |
+|   result: 2                                                                                             |                                                                                                         |
+| peek(): 2                                                                                               |                                                                                                         |
+|   queue.peek(): 2 at ManyToOneConcurrentArrayQueueTest.peek(ManyToOneConcurrentArrayQueue.kt:19)        |                                                                                                         |
+|     head ➜ 2 at AbstractConcurrentArrayQueue.peek(AbstractConcurrentArrayQueue.java:200)                |                                                                                                         |
+|   result: 2                                                                                             |                                                                                                         |
+| offer(4): true                                                                                          |                                                                                                         |
+|   queue.offer(4): true at ManyToOneConcurrentArrayQueueTest.offer(ManyToOneConcurrentArrayQueue.kt:13)  |                                                                                                         |
+|     sharedHeadCache ➜ 2 at ManyToOneConcurrentArrayQueue.offer(ManyToOneConcurrentArrayQueue.java:63)   |                                                                                                         |
+|     tail ➜ 5 at ManyToOneConcurrentArrayQueue.offer(ManyToOneConcurrentArrayQueue.java:68)              |                                                                                                         |
+|   result: true                                                                                          |                                                                                                         |
+| peek(): 2                                                                                               |                                                                                                         |
+|   queue.peek(): 2 at ManyToOneConcurrentArrayQueueTest.peek(ManyToOneConcurrentArrayQueue.kt:19)        |                                                                                                         |
+|     head ➜ 2 at AbstractConcurrentArrayQueue.peek(AbstractConcurrentArrayQueue.java:200)                |                                                                                                         |
+|   result: 2                                                                                             |                                                                                                         |
+| offer(2): false                                                                                         |                                                                                                         |
+|   queue.offer(2): false at ManyToOneConcurrentArrayQueueTest.offer(ManyToOneConcurrentArrayQueue.kt:13) |                                                                                                         |
+|     sharedHeadCache ➜ 2 at ManyToOneConcurrentArrayQueue.offer(ManyToOneConcurrentArrayQueue.java:63)   |                                                                                                         |
+|     tail ➜ 6 at ManyToOneConcurrentArrayQueue.offer(ManyToOneConcurrentArrayQueue.java:68)              |                                                                                                         |
+|     head ➜ 2 at ManyToOneConcurrentArrayQueue.offer(ManyToOneConcurrentArrayQueue.java:71)              |                                                                                                         |
+|   result: false                                                                                         |                                                                                                         |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

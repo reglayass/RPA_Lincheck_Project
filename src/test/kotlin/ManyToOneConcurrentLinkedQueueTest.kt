@@ -18,23 +18,15 @@ class ManyToOneConcurrentLinkedQueueTest {
     @Operation(nonParallelGroup = "consumer")
     fun peek() = queue.peek()
 
-    @Operation(nonParallelGroup = "consumer")
-    fun size() = queue.size
-
-    @Operation(nonParallelGroup = "consumer")
-    fun isEmpty() = queue.isEmpty()
-
     @Test
     fun runModelCheckingTest() = ModelCheckingOptions()
         .sequentialSpecification(LinkedQueueSpec::class.java)
-        .threads(3)
-        .iterations(100)
+        .minimizeFailedScenario(false)
         .check(this::class)
 
     @Test
     fun runStressTest() = StressOptions()
         .sequentialSpecification(LinkedQueueSpec::class.java)
-        .threads(3)
-        .iterations(100)
+        .minimizeFailedScenario(false)
         .check(this::class)
 }
