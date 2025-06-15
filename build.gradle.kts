@@ -26,7 +26,9 @@ dependencies {
 tasks.withType<Test> {
     useJUnitPlatform()
     jvmArgs(
+        "--add-opens=java.base/java.lang=ALL-UNNAMED",
+        "--add-opens=java.base/sun.instrument=ALL-UNNAMED",
         "--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED",
-        "--add-opens=java.base/java.nio=ALL-UNNAMED"  // sometimes needed for buffer access
+        "--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED"
     )
 }

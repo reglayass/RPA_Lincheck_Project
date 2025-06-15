@@ -10,7 +10,7 @@ class ManyToManyConcurrentArrayQueueTest {
     private val queue = ManyToManyConcurrentArrayQueue<Int>(3)
 
     @Operation
-    fun offer(@Param(gen = IntGen::class, conf = "1:10") x: Int) = queue.offer(x)
+    fun offer(@Param(gen = IntGen::class, conf = "1:5") x: Int) = queue.offer(x)
 
     @Operation
     fun poll() = queue.poll()
@@ -18,9 +18,29 @@ class ManyToManyConcurrentArrayQueueTest {
     @Operation
     fun peek() = queue.peek()
 
-    @Test
-    fun runModelCheckingTest() = ModelCheckingOptions().check(this::class)
+    @Operation
+    fun size() = queue.size
+
+    @Operation
+    fun isEmpty() = queue.isEmpty()
+
+    @Operation
+    fun contains(@Param(gen = IntGen::class, conf="1:10")x: Int) = queue.contains(x)
+
+    @Operation
+    fun clear() = queue.clear()
 
     @Test
-    fun runStressTest() = StressOptions().check(this::class)
+    fun runModelCheckingTest() = ModelCheckingOptions()
+            .sequentialSpecification(ArrayQueueSequentialSpec::class.java)
+            .threads(3)
+            .iterations(100)
+            .check(this::class)
+
+    @Test
+    fun runStressTest() = StressOptions()
+            .sequentialSpecification(ArrayQueueSequentialSpec::class.java)
+            .threads(3)
+            .iterations(100)
+            .check(this::class)
 }

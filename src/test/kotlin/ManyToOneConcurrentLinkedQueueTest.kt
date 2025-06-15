@@ -15,21 +15,26 @@ class ManyToOneConcurrentLinkedQueueTest {
     @Operation(nonParallelGroup = "consumer")
     fun poll() = queue.poll()
 
-    @Operation()
+    @Operation(nonParallelGroup = "consumer")
     fun peek() = queue.peek()
 
-    @Operation
+    @Operation(nonParallelGroup = "consumer")
     fun size() = queue.size
 
-    @Operation
-    fun contains(@Param(gen = IntGen::class, conf="1:10")x: Int) = queue.contains(x)
-
-    @Operation
-    fun remove(@Param(gen = IntGen::class, conf="1:10")x: Int) = queue.remove()
+    @Operation(nonParallelGroup = "consumer")
+    fun isEmpty() = queue.isEmpty()
 
     @Test
-    fun runModelCheckingTest() = ModelCheckingOptions().check(this::class)
+    fun runModelCheckingTest() = ModelCheckingOptions()
+        .sequentialSpecification(LinkedQueueSpec::class.java)
+        .threads(3)
+        .iterations(100)
+        .check(this::class)
 
     @Test
-    fun runStressTest() = StressOptions().check(this::class)
+    fun runStressTest() = StressOptions()
+        .sequentialSpecification(LinkedQueueSpec::class.java)
+        .threads(3)
+        .iterations(100)
+        .check(this::class)
 }

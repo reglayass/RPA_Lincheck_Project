@@ -17,4 +17,6 @@ class ArrayQueueSequentialSpec {
     fun isEmpty(): Boolean = buffer.isEmpty()
 
     fun clear() = buffer.clear()
+
+    fun contains(e: Int) = buffer.contains(e)
 }
