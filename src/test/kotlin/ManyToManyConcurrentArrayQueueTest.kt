@@ -19,14 +19,8 @@ class ManyToManyConcurrentArrayQueueTest {
     fun peek() = queue.peek()
 
     @Test
-    fun runModelCheckingTest() = ModelCheckingOptions()
-        .sequentialSpecification(ArrayDequeSpec::class.java)
-        .minimizeFailedScenario(false)
-        .check(this::class)
+    fun runModelCheckingTest() = ModelCheckingOptions().check(this::class)
 
     @Test
-    fun runStressTest() = StressOptions()
-        .sequentialSpecification(ArrayDequeSpec::class.java)
-        .minimizeFailedScenario(false)
-        .check(this::class)
+    fun runStressTest() = StressOptions().check(this::class)
 }

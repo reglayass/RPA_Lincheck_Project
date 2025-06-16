@@ -1,19 +1,11 @@
+import java.util.concurrent.LinkedBlockingQueue
+
 class LinkedQueueSpec {
-    private val buf = java.util.LinkedList<Int>()
+    private val buffer = LinkedBlockingQueue<Int>()
 
-    fun offer(e: Int): Boolean {
-        buf.addLast(e)
-        return true
-    }
+    fun offer(e: Int) = buffer.offer(e)
 
-    fun poll(): Int? =
-        if (buf.isEmpty()) null else buf.removeFirst()
+    fun poll(): Int? = buffer.poll()
 
-    fun peek(): Int? = buf.peekFirst()
-
-    fun size(): Int = buf.size
-
-    fun isEmpty(): Boolean = buf.isEmpty()
-
-    fun clear() = buf.clear()
+    fun peek(): Int? = buffer.peek()
 }

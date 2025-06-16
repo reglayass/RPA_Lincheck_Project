@@ -7,7 +7,7 @@ import org.jetbrains.kotlinx.lincheck.strategy.stress.StressOptions
 import org.junit.Test
 
 class MpscArrayQueueTest {
-    private var queue = MpscArrayQueue<Int>(3);
+    private var queue = MpscArrayQueue<Int>(2);
 
     @Operation
     fun offer(@Param(gen = IntGen::class, conf="1:5") e: Int) = queue.offer(e)
@@ -19,8 +19,8 @@ class MpscArrayQueueTest {
     fun poll() = queue.poll()
 
     @Test
-    fun runStressTest() = StressOptions().minimizeFailedScenario(false).sequentialSpecification(ArrayDequeSpec::class.java).check(this::class)
+    fun runStressTest() = StressOptions().check(this::class)
 
     @Test
-    fun modelChecking() = ModelCheckingOptions().minimizeFailedScenario(false).sequentialSpecification(ArrayDequeSpec::class.java).check(this::class)
+    fun modelChecking() = ModelCheckingOptions().check(this::class)
 }
