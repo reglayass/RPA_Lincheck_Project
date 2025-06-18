@@ -6,13 +6,19 @@ import org.jetbrains.kotlinx.lincheck.strategy.stress.StressOptions
 import org.junit.Test
 
 class QuasarSemaphoreTest {
-    private var semaphore = Semaphore(1)
+    private var semaphore = Semaphore(3, true)
 
     @Operation
     fun tryAcquire() = semaphore.tryAcquire()
 
     @Operation
     fun release() = semaphore.release()
+
+    @Operation
+    fun availablePermits() = semaphore.availablePermits()
+
+    @Operation
+    fun drainPermits() = semaphore.drainPermits()
 
     @Test
     fun stressTest() = StressOptions().check(this::class)

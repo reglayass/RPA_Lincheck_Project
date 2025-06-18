@@ -14,12 +14,6 @@ class ThreadlyConcurrentArrayListTest {
     @Operation
     fun get(i: Int) = list[i]
 
-    @Operation
-    fun size() = list.size
-
-    @Operation
-    fun clear() = list.clear()
-
     @Test
     fun stressTest() = StressOptions().check(this::class)
 

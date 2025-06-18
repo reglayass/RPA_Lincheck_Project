@@ -1,22 +1,26 @@
-import co.paralleluniverse.strands.queues.ArrayQueue
 import org.jetbrains.kotlinx.lincheck.annotations.Operation
 import org.jetbrains.kotlinx.lincheck.check
 import org.jetbrains.kotlinx.lincheck.strategy.managed.modelchecking.ModelCheckingOptions
 import org.jetbrains.kotlinx.lincheck.strategy.stress.StressOptions
 import org.junit.Test
+import org.threadly.util.debug.StackTracker
 
-class QuasarArrayQueueTest {
-    private var queue = ArrayQueue<Int>(1);
-
-    @Operation
-    fun enq(i: Int) = queue.enq(i)
+class ThreadlyStackTrackerTest {
+    private var tracker = StackTracker()
 
     @Operation
-    fun poll() = queue.poll()
+    fun counts() = tracker.dumpStackCounts().size
+
+    @Operation
+    fun record() = tracker.recordStack()
+
+    @Operation
+    fun reset() = tracker.reset()
 
     @Test
-    fun runStressTest() = StressOptions().check(this::class)
+    fun stressTest() = StressOptions().check(this::class)
 
     @Test
     fun modelChecking() = ModelCheckingOptions().check(this::class)
+
 }

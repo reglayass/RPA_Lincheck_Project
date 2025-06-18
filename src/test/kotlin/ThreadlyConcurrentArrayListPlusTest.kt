@@ -1,22 +1,27 @@
-import co.paralleluniverse.strands.queues.ArrayQueue
 import org.jetbrains.kotlinx.lincheck.annotations.Operation
 import org.jetbrains.kotlinx.lincheck.check
 import org.jetbrains.kotlinx.lincheck.strategy.managed.modelchecking.ModelCheckingOptions
 import org.jetbrains.kotlinx.lincheck.strategy.stress.StressOptions
 import org.junit.Test
+import org.threadly.concurrent.collections.ConcurrentArrayList
 
-class QuasarArrayQueueTest {
-    private var queue = ArrayQueue<Int>(1);
-
-    @Operation
-    fun enq(i: Int) = queue.enq(i)
+class ThreadlyConcurrentArrayListPlusTest {
+    private var list = ConcurrentArrayList<Int>()
 
     @Operation
-    fun poll() = queue.poll()
+    fun add(i: Int) = list.add(i)
+
+    @Operation
+    fun get(i: Int) = list[i]
+
+    @Operation
+    fun clear() = list.clear()
 
     @Test
-    fun runStressTest() = StressOptions().check(this::class)
+    fun stressTest() = StressOptions().check(this::class)
 
     @Test
     fun modelChecking() = ModelCheckingOptions().check(this::class)
+
+
 }

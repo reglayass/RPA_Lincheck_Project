@@ -14,6 +14,9 @@ class QuasarToOneBoxQueueTest {
     @Operation(nonParallelGroup = "consumer")
     fun poll() = queue.poll()
 
+    @Operation
+    fun size() = queue.size()
+
     @Test
     fun runStressTest() = StressOptions().check(this::class)
 

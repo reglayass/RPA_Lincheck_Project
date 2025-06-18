@@ -14,6 +14,9 @@ class QuasarToManyBoxQueueTest {
     @Operation
     fun poll() = queue.poll()
 
+    @Operation
+    fun size() = queue.size()
+
     @Test
     fun runStressTest() = StressOptions().check(this::class)
 
