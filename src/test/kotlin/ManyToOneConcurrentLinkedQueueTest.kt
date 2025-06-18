@@ -19,14 +19,8 @@ class ManyToOneConcurrentLinkedQueueTest {
     fun peek() = queue.peek()
 
     @Test
-    fun runModelCheckingTest() = ModelCheckingOptions()
-        .sequentialSpecification(LinkedQueueSpec::class.java)
-        .minimizeFailedScenario(false)
-        .check(this::class)
+    fun runModelCheckingTest() = ModelCheckingOptions().check(this::class)
 
     @Test
-    fun runStressTest() = StressOptions()
-        .sequentialSpecification(LinkedQueueSpec::class.java)
-        .minimizeFailedScenario(false)
-        .check(this::class)
+    fun runStressTest() = StressOptions().check(this::class)
 }

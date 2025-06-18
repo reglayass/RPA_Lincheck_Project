@@ -7,7 +7,7 @@ import org.jetbrains.kotlinx.lincheck.strategy.managed.modelchecking.ModelChecki
 import org.jetbrains.kotlinx.lincheck.strategy.stress.StressOptions
 import org.junit.Test
 
-class SpscLinkedQueue {
+class SpscLinkedQueueTest {
     private var queue = MpmcArrayQueue<Int>(3);
 
     @Operation(nonParallelGroup = "producers")
@@ -20,8 +20,8 @@ class SpscLinkedQueue {
     fun poll() = queue.poll()
 
     @Test
-    fun runStressTest() = StressOptions().minimizeFailedScenario(false).sequentialSpecification(LinkedQueueSpec::class.java).check(this::class)
+    fun runStressTest() = StressOptions().check(this::class)
 
     @Test
-    fun modelChecking() = ModelCheckingOptions().minimizeFailedScenario(false).sequentialSpecification(LinkedQueueSpec::class.java).check(this::class)
+    fun modelChecking() = ModelCheckingOptions().check(this::class)
 }

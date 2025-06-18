@@ -20,8 +20,8 @@ class MpscLinkedQueueTest {
     fun poll() = queue.poll()
 
     @Test
-    fun runStressTest() = StressOptions().minimizeFailedScenario(false).sequentialSpecification(LinkedQueueSpec::class.java).check(this::class)
+    fun runStressTest() = StressOptions().check(this::class)
 
     @Test
-    fun modelChecking() = ModelCheckingOptions().minimizeFailedScenario(false).sequentialSpecification(LinkedQueueSpec::class.java).check(this::class)
+    fun modelChecking() = ModelCheckingOptions().check(this::class)
 }
